@@ -1,8 +1,10 @@
 package com.TaskManager.TaskManager.Entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,34 +20,33 @@ import com.TaskManager.TaskManager.Enum.Status;
 @Entity
 @Table(name = "tarefas")
 public class Tarefas {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String titulo;
     private String descricao;
-    
+
     @Enumerated(EnumType.STRING)
     private Status status;
     private LocalDate dataVencimento;
 
-    @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario_id;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
     private LocalDate dataCriacao;
-    private LocalDate ultumaAtualizacao;
-    
-    public Tarefas(){}
+    private LocalDate ultimaAtualizacao;
 
-    public Tarefas(long id, String titulo, String descricao, Status status, LocalDate dataVencimento, Usuario usuario_id, LocalDate dataCriacao, LocalDate ultumaAtualizacao) {
-        this.id = id;
+    public Tarefas() {
+    }
+
+    public Tarefas(String titulo, String descricao, Status status, LocalDate dataVencimento, LocalDate dataCriacao, LocalDate ultimaAtualizacao) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.status = status;
         this.dataVencimento = dataVencimento;
-        this.usuario_id = usuario_id;
         this.dataCriacao = dataCriacao;
-        this.ultumaAtualizacao = ultumaAtualizacao;
+        this.ultimaAtualizacao = ultimaAtualizacao;
     }
 
     public long getId() {
@@ -88,12 +89,12 @@ public class Tarefas {
         this.dataVencimento = dataVencimento;
     }
 
-    public Usuario getUsuario_id() {
-        return usuario_id;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setUsuario_id(Usuario usuario_id) {
-        this.usuario_id = usuario_id;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public LocalDate getDataCriacao() {
@@ -104,12 +105,12 @@ public class Tarefas {
         this.dataCriacao = dataCriacao;
     }
 
-    public LocalDate getUltumaAtualizacao() {
-        return ultumaAtualizacao;
+    public LocalDate getUltimaAtualizacao() {
+        return ultimaAtualizacao;
     }
 
-    public void setUltumaAtualizacao(LocalDate ultumaAtualizacao) {
-        this.ultumaAtualizacao = ultumaAtualizacao;
+    public void setUltimaAtualizacao(LocalDate ultimaAtualizacao) {
+        this.ultimaAtualizacao = ultimaAtualizacao;
     }
 
     @Override
@@ -131,5 +132,4 @@ public class Tarefas {
         return true;
     }
 
-    
 }

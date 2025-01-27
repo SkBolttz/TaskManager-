@@ -1,11 +1,13 @@
 package com.TaskManager.TaskManager.Entities;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,19 +21,20 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    
     private String nome;
     private String email;
     private String senha;
     private LocalDate DataCriacao;
 
-    @OneToMany(mappedBy = "usuario_id", cascade = CascadeType.ALL, orphanRemoval = true) 
-    private List<Tarefas> tarefas;
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Tarefas> tarefas = new ArrayList<>();
+
     public Usuario(){
 
     }
 
-    public Usuario(int id, String nome, String email, String senha, LocalDate dataCriacao) {
-        this.id = id;
+    public Usuario(String nome, String email, String senha, LocalDate dataCriacao) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
@@ -87,15 +90,9 @@ public class Usuario {
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
+        if (obj == null || getClass() != obj.getClass())
             return false;
         Usuario other = (Usuario) obj;
-        if (id != other.id)
-            return false;
-        return true;
+        return id == other.id; 
     }
-
-    
 }
