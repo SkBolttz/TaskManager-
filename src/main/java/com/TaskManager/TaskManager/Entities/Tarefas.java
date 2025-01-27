@@ -132,4 +132,10 @@ public class Tarefas {
         return true;
     }
 
+    public String toString(){
+        return  "Titulo: " + titulo + "\n" +
+                "Descricao: " + descricao + "\n" +
+                "Status: " + status + "\n" +
+                "Data de Vencimento: " + dataVencimento + "\n";
+    }
 }

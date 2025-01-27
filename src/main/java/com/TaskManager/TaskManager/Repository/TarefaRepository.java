@@ -8,5 +8,7 @@ public interface TarefaRepository extends JpaRepository<Tarefas, Long> {
     Tarefas findByTitulo(String nome);
 
     Tarefas findById(long id);
+
+    Iterable<Tarefas> findAllByUsuarioId(long id);
     
 }

@@ -31,4 +31,8 @@ public class TarefaService {
             System.out.println("Tarefa nao encontrada!");
         }
     }
+
+    public void findAllByUsuarioId(long id) {
+        repository.findAllByUsuarioId(id);
+    }
 }

@@ -1,6 +1,7 @@
 package com.TaskManager.TaskManager.Service;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,5 +47,9 @@ public class UsuarioService {
 
     public Usuario findByNome(String nomeUsuario) {
         return userRepository.findByNome(nomeUsuario);
+    }
+
+    public Optional<Usuario> findById(Long id){
+        return userRepository.findById(id);
     }
 }
